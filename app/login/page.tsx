@@ -1,3 +1,4 @@
+import LoginForm from "./loginForm";
 export default function LoginPage() {
   const logo = (
     <svg
@@ -37,64 +38,21 @@ export default function LoginPage() {
       />
     </svg>
   );
-  const mail = (
-    <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z"
-        stroke="#4E4E4E"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      />
-      <path
-        d="M22 6L12 13L2 6"
-        stroke="#4E4E4E"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      />
-    </svg>
-  );
+
 
   return (
     <>
       <div className="logo flex justify-center mt-[64px]">{logo}</div>
-      <div className="text flex justify-center text-center mt-[56px] text-[18px] text-[#4E4E4E]">
-        A grateful heart is a happy heart, start <br /> logging your gratitude
-        today
+      <div className="text flex justify-center text-center mt-[56px] text-[18px] text-appColor-text font-playfair">
+      Gratitude journaling helps reduce stress, boost happiness, and improve your well-being.
       </div>
 
-      <div className="login flex gap-[18px] justify-center align-middle flex-col mt-[56px]">
-        <input
-          className="email w-full h-[42px] px-[12px] rounded-[4px] border border-[#C1C1C1] bg-[#fafafa]"
-          type="email"
-          required
-          placeholder="Email"
-        />
-        <input
-          className="password w-full h-[42px] px-[12px] rounded-[4px] border border-[#C1C1C1] bg-[#fafafa]"
-          type="password"
-          required
-          placeholder="Password"
-        />
-        <div className="buttons flex flex-col items-center gap-[4px] mt-[24px]">
-          <button className="h-[42px] px-[32px] w-[120px] rounded-[4px] bg-[#FFC107] text-[#4e4e4e] text-[14px]">
-            Login
-          </button>
-          <button className="h-[42px] px-[32px] w-[120px] rounded-[4px] text-[#4e4e4e] text-[14px]">
-            Sign up
-          </button>
-        </div>
-        <div className="forgetPass absolute bottom-[32px] left-1/2 -translate-x-1/2 text-[12px] text-[#4e4e4e]">
+      <LoginForm></LoginForm>
+
+      <div className="forgetPass absolute bottom-[32px] left-1/2 -translate-x-1/2 text-[12px] text-[#4e4e4e]">
           Forgot password?
         </div>
-      </div>
     </>
   );
 }
+
