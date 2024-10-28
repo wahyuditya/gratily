@@ -1,4 +1,4 @@
-import LoginForm from "./loginForm";
+import LoginForm from "./LoginForm";
 export default function LoginPage() {
   const logo = (
     <svg
@@ -39,20 +39,25 @@ export default function LoginPage() {
     </svg>
   );
 
-
   return (
     <>
       <div className="logo flex justify-center mt-[64px]">{logo}</div>
-      <div className="text flex justify-center text-center mt-[56px] text-[18px] text-appColor-text font-playfair">
-      Gratitude journaling helps reduce stress, boost happiness, and improve your well-being.
-      </div>
 
-      <LoginForm></LoginForm>
-
-      <div className="forgetPass absolute bottom-[32px] left-1/2 -translate-x-1/2 text-[12px] text-[#4e4e4e]">
-          Forgot password?
+      <div className="warper md:flex md:gap-[42px] md:mt-[200px] mt-[58px]">
+        <div className="text  flex justify-center items-center text-center mt-[56px] md:mt-0 text-[24px] w-full md:text-[32px] xl:px-[42px] xl:text-[42px] text-appColor-text font-playfair">
+          <p>
+            Gratitude journaling helps reduce stress, boost happiness, and
+            improve your well-being.
+          </p>
         </div>
+
+        <div className="flex  justify-center align-middle items-center w-full">
+          <LoginForm />
+        </div>
+      </div>
+      <div className="forgetPass absolute bottom-[32px] left-1/2 -translate-x-1/2 text-[14px] text-[#4e4e4e]">
+        <button>Forgot password?</button>
+      </div>
     </>
   );
 }
-
