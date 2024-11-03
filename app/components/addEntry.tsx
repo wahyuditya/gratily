@@ -22,7 +22,7 @@ function AddEntry() {
             name=""
             id=""
             placeholder="I'm grateful for..."
-            className="w-full h-[128px] px-[18px] py-[12px] bg-[#fafafa] text-appColor-text font-playfair text-[18px]"
+            className="w-full h-[128px] px-[18px] py-[12px] bg-[#fafafa] text-appColor-text font-playfair text-[18px] border border-appColor-border rounded-[4px]"
           ></textarea>
           <button className="h-[42px] px-[32px] w-[120px] bg-appColor-500 rounded-[4px] text-appColor-text text-[14px]">
             Save

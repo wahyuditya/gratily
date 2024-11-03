@@ -5,9 +5,11 @@ import Entries from "./components/entries";
 export default function Home() {
   return (
     <>
-      {/* <Navbar />
-      <AddEntry /> */}
-      <Entries />
+      <Navbar />
+      <AddEntry />
+      <div className="entries relative h-screen">
+        <Entries />
+      </div>
     </>
   );
 }
