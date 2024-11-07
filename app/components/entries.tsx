@@ -11,7 +11,11 @@ function Entries() {
 
   return (
     <>
-      <div className="background absolute bottom-[-65px] h-screen bg-[linear-gradient(to_right_top,#fffbc5,#fffcce,#fffdd8,#fffee1,#ffffea)] mx-[-20px] w-[calc(100%+40px)] rounded-[18px] border border-appColor-border">
+      <div
+        className={`background ${
+          isOpen ? "h-screen" : "h-[214px] rounded-t-[18px]"
+        }  fixed bottom-0 left-0 right-0 bg-[linear-gradient(to_right_top,#fffbc5,#fffcce,#fffdd8,#fffee1,#ffffea)] border border-appColor-border transition-all duration-300 ease-in-out`}
+      >
         <div className="logs px-[18px]">
           <div className="top h-[71px] mb-[32px] relative justify-center flex items-center w-full">
             <div className="title text-center font-playfair font-medium text-[26px] text-appColor-950">

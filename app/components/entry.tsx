@@ -14,10 +14,10 @@ function Entry() {
         <div className="right flex w-[50%] flex-col">
           <div
             onClick={handleExpand}
-            className={`text font-playfair font-medium text-[16px] ${
+            className={`text font-playfair font-medium text-[16px] transition-all duration-300 ease-in-out ${
               isExpand
                 ? "h-[24px] overflow-hidden text-ellipsis whitespace-nowrap"
-                : ""
+                : "h-fit"
             } `}
           >
             I'm grateful for the support of my friends who always know how to
