@@ -1,3 +1,7 @@
+"use client";
+import Button from "@/components/button";
+import Input from "@/components/input";
+
 function LoginForm() {
   const mail = (
     <svg
@@ -47,41 +51,29 @@ function LoginForm() {
       />
     </svg>
   );
+
+  //use client for console log (dev propose), remove use client when done debuging
+  const handleLogin = () => {
+    alert("login click");
+  };
+
+  const handleSignUp = () => {
+    console.log("Sign up click");
+    alert("Sign up click");
+  };
+
   return (
     <div className="login max-w-lg w-full mt-[56px]">
       <form action="#">
-        <div className="email relative mb-[18px]">
-          <div className="absolute left-[12px] top-1/2 -translate-y-1/2">
-            {mail}
-          </div>
-          <input
-            className="w-full h-[42px] px-[46px] rounded-[4px] border border-[#C1C1C1] bg-[#fafafa]"
-            type="email"
-            required
-            placeholder="Email"
-          />
-        </div>
-
-        <div className="password relative">
-          <div className="absolute left-[12px] top-1/2 -translate-y-1/2">
-            {lock}
-          </div>
-          <input
-            className="w-full h-[42px] px-[46px] rounded-[4px] border border-[#C1C1C1] bg-[#fafafa]"
-            type="password"
-            required
-            placeholder="Password"
-          />
-        </div>
+        <Input label="Email" type="email" icon={mail} required />
+        <Input label="Password" type="password" icon={lock} required />
         <div className="buttons flex flex-col items-center gap-[4px] mt-[24px]">
-          <button className="h-[42px] px-[32px] w-[120px] rounded-[4px] bg-appColor-500 hover:bg-appColor-400 text-[#4e4e4e] text-[14px]">
-            Login
-          </button>
-          <button className="h-[42px] px-[32px] w-[120px] rounded-[4px] text-[#4e4e4e] text-[14px]">
-            Sign up
-          </button>
+          <Button label="Login" onClick={handleLogin} variant="primary" />
         </div>
       </form>
+      <div className="signUp flex w-full align-middle justify-center">
+        <Button label="Sign up" onClick={handleSignUp} variant="secondary" />
+      </div>
     </div>
   );
 }

@@ -1,6 +1,6 @@
-import Navbar from "./components/navbar";
-import AddEntry from "./components/addEntry";
-import Entries from "./components/entries";
+import Navbar from "../../components/navbar";
+import AddEntry from "./addEntry";
+import Entries from "./entries";
 
 export default function Home() {
   return (
