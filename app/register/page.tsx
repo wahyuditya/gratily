@@ -1,8 +1,18 @@
 "use client";
 import Input from "@/components/input";
 import Button from "@/components/button";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../lib/firebaseConfig";
+import { ChangeEvent, useState } from "react";
 
 export default function Register() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
+
   const logo = (
     <svg
       width="206"
@@ -53,16 +63,16 @@ export default function Register() {
       <path
         d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21"
         stroke="#4E4E4E"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M12 11C14.2091 11 16 9.20914 16 7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7C8 9.20914 9.79086 11 12 11Z"
         stroke="#4E4E4E"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
@@ -116,8 +126,29 @@ export default function Register() {
   );
 
   //use client for console log (dev propose), remove use client when done debuging
-  const handleSignUp = () => {
-    alert("sign up");
+  const handleName = (e: ChangeEvent<HTMLInputElement>) => {
+    setName(e.target.value);
+  };
+
+  const handleEmail = (e: ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+  };
+
+  const handlePassword = (e: ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+  };
+
+  const handleSignUp = async (e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      setSuccess("User registered successfully!");
+      setError(null);
+    } catch (err: any) {
+      setError("Failed to register: " + err.message);
+      setSuccess(null);
+    }
   };
 
   const handleSignIn = () => {
@@ -139,14 +170,33 @@ export default function Register() {
         <div className="flex  justify-center align-middle items-center w-full">
           <div className="max-w-lg w-full mt-[56px]">
             <form action="">
-              <Input label="Name" type="text" icon={user} required />
-              <Input label="Email" type="email" icon={mail} required />
-              <Input label="Password" type="password" icon={lock} required />
+              <Input
+                onChange={handleName}
+                label="Name"
+                type="text"
+                icon={user}
+                required
+              />
+              <Input
+                onChange={handleEmail}
+                label="Email"
+                type="email"
+                icon={mail}
+                required
+              />
+              <Input
+                onChange={handlePassword}
+                label="Password"
+                type="password"
+                icon={lock}
+                required
+              />
               <div className=" flex flex-col items-center gap-[4px] mt-[24px]">
                 <Button
                   label="Sign up"
                   onClick={handleSignUp}
                   variant="primary"
+                  type="submit"
                 />
               </div>
             </form>

@@ -3,6 +3,8 @@ interface InputProps {
   icon: any;
   required?: boolean;
   type?: "email" | "password" | "text";
+  onChange: (e: any) => void;
+  value?: any;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -10,6 +12,8 @@ const Input: React.FC<InputProps> = ({
   icon,
   required = true,
   type,
+  onChange,
+  value,
 }) => {
   return (
     <>
@@ -22,6 +26,8 @@ const Input: React.FC<InputProps> = ({
           type={type}
           required={required}
           placeholder={label}
+          onChange={onChange}
+          value={value}
         />
       </div>
     </>
