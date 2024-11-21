@@ -3,7 +3,7 @@ interface InputProps {
   icon: any;
   required?: boolean;
   type?: "email" | "password" | "text";
-  onChange: (e: any) => void;
+  onChange?: (e: any) => void;
   value?: any;
 }
 

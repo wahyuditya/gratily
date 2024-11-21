@@ -4,11 +4,14 @@ import Button from "@/components/button";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../lib/firebaseConfig";
 import { ChangeEvent, useState } from "react";
+import Link from "next/link";
+import router, { useRouter } from "next/navigation";
 
 export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+  const router = useRouter();
 
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
@@ -143,21 +146,29 @@ export default function Register() {
 
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-      setSuccess("User registered successfully!");
+      setSuccess(
+        "Successfully registerd, we'll direct you to homepage shortly!"
+      );
       setError(null);
+      setTimeout(() => {
+        router.push("/main");
+      }, 3000);
     } catch (err: any) {
       setError("Failed to register: " + err.message);
       setSuccess(null);
     }
   };
 
-  const handleSignIn = () => {
-    alert("sign in");
-  };
+  const handleLogIn = () => {};
 
   return (
     <>
       <div className="logo flex justify-center mt-[64px]">{logo}</div>
+      {success && (
+        <div className="absolute w-full md:w-fit left-1/2 -translate-x-1/2 px-8 py-4 rounded-[4px] text-center bg-amber-200 text-appColor-text mt-[64px]">
+          {success}
+        </div>
+      )}
 
       <div className="warper md:flex md:gap-[42px] md:mt-[200px] mt-[58px]">
         <div className="text  flex justify-center items-center text-center mt-[56px] md:mt-0 text-[24px] w-full md:text-[32px] xl:px-[42px] xl:text-[42px] text-appColor-text font-playfair">
@@ -203,8 +214,16 @@ export default function Register() {
           </div>
         </div>
       </div>
-      <div className=" absolute bottom-[32px] left-1/2 -translate-x-1/2 text-[14px] text-[#4e4e4e]">
-        <button>Already have an account? sign in.</button>
+
+      <div className=" w-full left-1/2 -translate-x-1/2 absolute bottom-[32px] text-center text-[14px] text-[#4e4e4e]">
+        <Link href="/login">
+          <Button
+            label="Already have an account? Log in"
+            onClick={handleLogIn}
+            variant="secondary"
+          />
+        </Link>
+        ;
       </div>
     </>
   );

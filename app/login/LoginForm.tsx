@@ -1,6 +1,7 @@
 "use client";
 import Button from "@/components/button";
 import Input from "@/components/input";
+import Link from "next/link";
 
 function LoginForm() {
   const mail = (
@@ -57,10 +58,7 @@ function LoginForm() {
     alert("login click");
   };
 
-  const handleSignUp = () => {
-    console.log("Sign up click");
-    alert("Sign up click");
-  };
+  const handleSignUp = () => {};
 
   return (
     <div className="login max-w-lg w-full mt-[56px]">
@@ -72,7 +70,10 @@ function LoginForm() {
         </div>
       </form>
       <div className="signUp flex w-full align-middle justify-center">
-        <Button label="Sign up" onClick={handleSignUp} variant="secondary" />
+        <Link href="/register">
+          {" "}
+          <Button label="Sign up" onClick={handleSignUp} variant="secondary" />
+        </Link>
       </div>
     </div>
   );
