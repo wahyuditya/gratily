@@ -41,7 +41,7 @@ function Navbar() {
   );
   return (
     <>
-      <div className="navbar flex items-center justify-between h-[72px] border-b border-appColor-border mx-[-20px] w-[calc(100%+40px)]">
+      <div className="navbar flex items-center justify-between h-[72px] border-b border-appColor-border md:px-[62px] mx-[-20px] w-[calc(100%+40px)]">
         <div className="logo ml-[20px]">{logo}</div>
         <Logout />
       </div>

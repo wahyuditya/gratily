@@ -2,8 +2,20 @@
 import Button from "@/components/button";
 import Input from "@/components/input";
 import Link from "next/link";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../lib/firebaseConfig";
+import React, { ChangeEvent, FormEvent, useState } from "react";
+import router from "next/router";
 
-function LoginForm() {
+interface LoginFormProps {
+  error?: any;
+  fade?: any;
+}
+
+const LoginForm: React.FC<LoginFormProps> = ({ fade }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   const mail = (
     <svg
       width="24"
@@ -54,29 +66,44 @@ function LoginForm() {
   );
 
   //use client for console log (dev propose), remove use client when done debuging
-  const handleLogin = () => {
-    alert("login click");
-  };
+  const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    fade = false;
 
-  const handleSignUp = () => {};
+    setTimeout(() => {
+      fade = true;
+    }, 5000);
+
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      console.log("Logged in:", userCredential.user);
+      router.push("/");
+    } catch (err: any) {
+      // error(err.message);
+    }
+  };
 
   return (
     <div className="login max-w-lg w-full mt-[56px]">
-      <form action="#">
+      <form onSubmit={handleLogin}>
         <Input label="Email" type="email" icon={mail} required />
         <Input label="Password" type="password" icon={lock} required />
         <div className="buttons flex flex-col items-center gap-[4px] mt-[24px]">
-          <Button label="Login" onClick={handleLogin} variant="primary" />
+          <Button label="Login" variant="primary" type="submit" />
         </div>
       </form>
       <div className="signUp flex w-full align-middle justify-center">
         <Link href="/register">
           {" "}
-          <Button label="Sign up" onClick={handleSignUp} variant="secondary" />
+          <Button label="Sign up" variant="secondary" />
         </Link>
       </div>
     </div>
   );
-}
+};
 
 export default LoginForm;

@@ -1,5 +1,10 @@
+import { useState } from "react";
 import LoginForm from "./LoginForm";
+import { setFips } from "crypto";
 export default function LoginPage() {
+  const [error, setError] = useState("");
+  const [fade, setFade] = useState(false);
+
   const logo = (
     <svg
       width="206"
@@ -39,9 +44,19 @@ export default function LoginPage() {
     </svg>
   );
 
+  const handleFade = () => {};
   return (
     <>
       <div className="logo flex justify-center mt-[64px]">{logo}</div>
+      {error && (
+        <div
+          className={`absolute w-full md:w-fit left-1/2 -translate-x-1/2 px-8 py-4 rounded-[4px] text-center bg-red-500 text-appColor-950 mt-[64px] transition-opacity duration-1000 ${
+            fade ? "opacity-0 delay-5000" : "opacity-100"
+          }`}
+        >
+          {error}
+        </div>
+      )}
 
       <div className="warper md:flex md:gap-[42px] md:mt-[200px] mt-[58px]">
         <div className="text  flex justify-center items-center text-center mt-[56px] md:mt-0 text-[24px] w-full md:text-[32px] xl:px-[42px] xl:text-[42px] text-appColor-text font-playfair">
@@ -52,7 +67,7 @@ export default function LoginPage() {
         </div>
 
         <div className="flex  justify-center align-middle items-center w-full">
-          <LoginForm />
+          <LoginForm fade={true} />
         </div>
       </div>
       <div className="forgetPass absolute bottom-[32px] left-1/2 -translate-x-1/2 text-[14px] text-[#4e4e4e]">

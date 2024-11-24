@@ -1,9 +1,11 @@
+import Button from "./button";
+
 function Logout() {
   return (
     <>
-      <button className="text-[14px] px-[18px] py-[4px] font-medium text-appColor-text">
-        Log out
-      </button>
+      <div className="mr-[20px]">
+        <Button label="Log out" variant="secondary" type="button" bordered />
+      </div>
     </>
   );
 }

@@ -8,13 +8,16 @@ import Link from "next/link";
 import router, { useRouter } from "next/navigation";
 
 export default function Register() {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
+
   const router = useRouter();
 
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+
+  const [fade, setFade] = useState(false);
 
   const logo = (
     <svg
@@ -129,6 +132,7 @@ export default function Register() {
   );
 
   //use client for console log (dev propose), remove use client when done debuging
+
   const handleName = (e: ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
   };
@@ -143,6 +147,13 @@ export default function Register() {
 
   const handleSignUp = async (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
+    setError(null);
+    setSuccess(null);
+    setFade(false);
+
+    setTimeout(() => {
+      setFade(true);
+    }, 5000);
 
     try {
       await createUserWithEmailAndPassword(auth, email, password);
@@ -151,10 +162,20 @@ export default function Register() {
       );
       setError(null);
       setTimeout(() => {
-        router.push("/main");
+        router.push("/");
       }, 3000);
     } catch (err: any) {
-      setError("Failed to register: " + err.message);
+      if (!name) {
+        setError("Please fill the name.");
+      } else if (err.code === "auth/email-already-in-use") {
+        setError("The email address is already use.");
+      } else if (err.code === "auth/invalid-email") {
+        setError("Email invalid.");
+      } else if (err.code === "auth/missing-password") {
+        setError("Please fill the password.");
+      } else {
+        setError("An error occurred. Please try again.");
+      }
       setSuccess(null);
     }
   };
@@ -170,6 +191,16 @@ export default function Register() {
         </div>
       )}
 
+      {error && (
+        <div
+          className={`absolute w-full md:w-fit left-1/2 -translate-x-1/2 px-8 py-4 rounded-[4px] text-center bg-red-500 text-appColor-950 mt-[64px] transition-opacity duration-1000 ${
+            fade ? "opacity-0 delay-5000" : "opacity-100"
+          }`}
+        >
+          {error}
+        </div>
+      )}
+
       <div className="warper md:flex md:gap-[42px] md:mt-[200px] mt-[58px]">
         <div className="text  flex justify-center items-center text-center mt-[56px] md:mt-0 text-[24px] w-full md:text-[32px] xl:px-[42px] xl:text-[42px] text-appColor-text font-playfair">
           <p>
@@ -180,7 +211,7 @@ export default function Register() {
 
         <div className="flex  justify-center align-middle items-center w-full">
           <div className="max-w-lg w-full mt-[56px]">
-            <form action="">
+            <form>
               <Input
                 onChange={handleName}
                 label="Name"
@@ -204,8 +235,8 @@ export default function Register() {
               />
               <div className=" flex flex-col items-center gap-[4px] mt-[24px]">
                 <Button
-                  label="Sign up"
                   onClick={handleSignUp}
+                  label="Sign up"
                   variant="primary"
                   type="submit"
                 />
