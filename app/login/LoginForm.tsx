@@ -2,19 +2,21 @@
 import Button from "@/components/button";
 import Input from "@/components/input";
 import Link from "next/link";
-import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../lib/firebaseConfig";
 import React, { ChangeEvent, FormEvent, useState } from "react";
-import router from "next/router";
+import { useRouter } from "next/navigation";
+import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 
 interface LoginFormProps {
   error?: any;
   fade?: any;
 }
 
-const LoginForm: React.FC<LoginFormProps> = ({ fade }) => {
+const LoginForm: React.FC<LoginFormProps> = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
+  const router = useRouter();
 
   const mail = (
     <svg
@@ -68,30 +70,37 @@ const LoginForm: React.FC<LoginFormProps> = ({ fade }) => {
   //use client for console log (dev propose), remove use client when done debuging
   const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    fade = false;
 
-    setTimeout(() => {
-      fade = true;
-    }, 5000);
+    setTimeout(() => {}, 5000);
 
     try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      console.log("Logged in:", userCredential.user);
+      const userCredential = await signInWithEmailAndPassword(email, password);
+      console.log("Logged in:", { userCredential });
+      setEmail("");
+      setPassword("");
       router.push("/");
     } catch (err: any) {
-      // error(err.message);
+      alert("Please check your email and password again.");
     }
   };
 
   return (
     <div className="login max-w-lg w-full mt-[56px]">
       <form onSubmit={handleLogin}>
-        <Input label="Email" type="email" icon={mail} required />
-        <Input label="Password" type="password" icon={lock} required />
+        <Input
+          onChange={(e) => setEmail(e.target.value)}
+          label="Email"
+          type="email"
+          icon={mail}
+          required
+        />
+        <Input
+          onChange={(e) => setPassword(e.target.value)}
+          label="Password"
+          type="password"
+          icon={lock}
+          required
+        />
         <div className="buttons flex flex-col items-center gap-[4px] mt-[24px]">
           <Button label="Login" variant="primary" type="submit" />
         </div>

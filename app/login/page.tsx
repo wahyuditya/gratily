@@ -1,9 +1,20 @@
+"use client";
 import { useState } from "react";
 import LoginForm from "./LoginForm";
-import { setFips } from "crypto";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "@/lib/firebaseConfig";
+import { useRouter } from "next/navigation";
+
 export default function LoginPage() {
   const [error, setError] = useState("");
   const [fade, setFade] = useState(false);
+  const [user] = useAuthState(auth);
+
+  const router = useRouter();
+
+  if (user) {
+    return router.push("/");
+  }
 
   const logo = (
     <svg
@@ -45,9 +56,11 @@ export default function LoginPage() {
   );
 
   const handleFade = () => {};
+
   return (
     <>
       <div className="logo flex justify-center mt-[64px]">{logo}</div>
+      {/* fix this first */}
       {error && (
         <div
           className={`absolute w-full md:w-fit left-1/2 -translate-x-1/2 px-8 py-4 rounded-[4px] text-center bg-red-500 text-appColor-950 mt-[64px] transition-opacity duration-1000 ${
@@ -58,7 +71,7 @@ export default function LoginPage() {
         </div>
       )}
 
-      <div className="warper md:flex md:gap-[42px] md:mt-[200px] mt-[58px]">
+      <div className="warper md:flex md:gap-[42px] md:mt-[100px] mt-[58px]">
         <div className="text  flex justify-center items-center text-center mt-[56px] md:mt-0 text-[24px] w-full md:text-[32px] xl:px-[42px] xl:text-[42px] text-appColor-text font-playfair">
           <p>
             A grateful heart is a happy heart, start logging your gratitude
@@ -67,7 +80,7 @@ export default function LoginPage() {
         </div>
 
         <div className="flex  justify-center align-middle items-center w-full">
-          <LoginForm fade={true} />
+          <LoginForm />
         </div>
       </div>
       <div className="forgetPass absolute bottom-[32px] left-1/2 -translate-x-1/2 text-[14px] text-[#4e4e4e]">

@@ -5,7 +5,8 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../lib/firebaseConfig";
 import { ChangeEvent, useState } from "react";
 import Link from "next/link";
-import router, { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 export default function Register() {
   const [name, setName] = useState("");
@@ -133,6 +134,12 @@ export default function Register() {
 
   //use client for console log (dev propose), remove use client when done debuging
 
+  const [users] = useAuthState(auth);
+
+  if (users) {
+    return router.push("/");
+  }
+
   const handleName = (e: ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
   };
@@ -145,7 +152,7 @@ export default function Register() {
     setPassword(e.target.value);
   };
 
-  const handleSignUp = async (e: ChangeEvent<HTMLInputElement>) => {
+  const handleSignUp = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(null);
     setSuccess(null);
@@ -160,6 +167,7 @@ export default function Register() {
       setSuccess(
         "Successfully registerd, we'll direct you to homepage shortly!"
       );
+
       setError(null);
       setTimeout(() => {
         router.push("/");
@@ -173,14 +181,14 @@ export default function Register() {
         setError("Email invalid.");
       } else if (err.code === "auth/missing-password") {
         setError("Please fill the password.");
+      } else if (err.code == "auth/weak-password") {
+        setError("Password must be at least 8 characters long.");
       } else {
         setError("An error occurred. Please try again.");
       }
       setSuccess(null);
     }
   };
-
-  const handleLogIn = () => {};
 
   return (
     <>
@@ -201,7 +209,7 @@ export default function Register() {
         </div>
       )}
 
-      <div className="warper md:flex md:gap-[42px] md:mt-[200px] mt-[58px]">
+      <div className="warper md:flex md:gap-[42px] md:mt-[100px] mt-[58px]">
         <div className="text  flex justify-center items-center text-center mt-[56px] md:mt-0 text-[24px] w-full md:text-[32px] xl:px-[42px] xl:text-[42px] text-appColor-text font-playfair">
           <p>
             Gratitude journaling helps reduce stress, boost happiness, and
@@ -211,7 +219,7 @@ export default function Register() {
 
         <div className="flex  justify-center align-middle items-center w-full">
           <div className="max-w-lg w-full mt-[56px]">
-            <form>
+            <form onSubmit={handleSignUp}>
               <Input
                 onChange={handleName}
                 label="Name"
@@ -234,12 +242,7 @@ export default function Register() {
                 required
               />
               <div className=" flex flex-col items-center gap-[4px] mt-[24px]">
-                <Button
-                  onClick={handleSignUp}
-                  label="Sign up"
-                  variant="primary"
-                  type="submit"
-                />
+                <Button label="Sign up" variant="primary" type="submit" />
               </div>
             </form>
           </div>
@@ -248,11 +251,7 @@ export default function Register() {
 
       <div className=" w-full left-1/2 -translate-x-1/2 absolute bottom-[32px] text-center text-[14px] text-[#4e4e4e]">
         <Link href="/login">
-          <Button
-            label="Already have an account? Log in"
-            onClick={handleLogIn}
-            variant="secondary"
-          />
+          <Button label="Already have an account? Log in" variant="secondary" />
         </Link>
         ;
       </div>
