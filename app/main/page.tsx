@@ -10,10 +10,6 @@ export default function Home() {
   const [user] = useAuthState(auth);
   const router = useRouter();
 
-  if (!user) {
-    return router.push("/login");
-  }
-
   return (
     <>
       <Navbar />

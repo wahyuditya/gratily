@@ -59,7 +59,7 @@ export default function Register() {
     </svg>
   );
 
-  const user = (
+  const user_icon = (
     <svg
       width="24"
       height="24"
@@ -133,12 +133,6 @@ export default function Register() {
   );
 
   //use client for console log (dev propose), remove use client when done debuging
-
-  const [users] = useAuthState(auth);
-
-  if (users) {
-    return router.push("/");
-  }
 
   const handleName = (e: ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
@@ -224,7 +218,7 @@ export default function Register() {
                 onChange={handleName}
                 label="Name"
                 type="text"
-                icon={user}
+                icon={user_icon}
                 required
               />
               <Input

@@ -75,7 +75,10 @@ const LoginForm: React.FC<LoginFormProps> = () => {
 
     try {
       const userCredential = await signInWithEmailAndPassword(email, password);
-      console.log("Logged in:", { userCredential });
+      // console.log("Logged in:", { userCredential });
+      // sessionStorage.setItem("user", `${userCredential?.user.email}`);
+      const token = await userCredential?.user.getIdToken();
+      document.cookie = `authToken=${token}; path=/`;
       setEmail("");
       setPassword("");
       router.push("/");
