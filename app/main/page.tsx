@@ -10,6 +10,8 @@ export default function Home() {
   const [user] = useAuthState(auth);
   const router = useRouter();
 
+  console.log(user);
+
   return (
     <>
       <Navbar />
