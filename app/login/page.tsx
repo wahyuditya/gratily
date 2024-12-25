@@ -61,11 +61,13 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [laoding, setLoading] = useState(false);
 
   const router = useRouter();
 
   const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const credential = await signInWithEmailAndPassword(
         auth,
@@ -81,11 +83,11 @@ export default function LoginPage() {
 
       router.push("/");
     } catch (e: any) {
-      // console.log("this>>> " + e.message);
       if (e.message === "Firebase: Error (auth/invalid-credential).") {
         setError("The email or password you entered is incorrect.");
       }
     }
+    setLoading(false);
   };
 
   return (
@@ -95,7 +97,7 @@ export default function LoginPage() {
       </div>
 
       <div className="warper md:flex md:gap-[42px] md:mt-[100px] mt-[58px]">
-        <div className="text  flex justify-center items-center text-center mt-[56px] md:mt-0 text-[24px] w-full md:text-[32px] xl:px-[42px] xl:text-[42px] text-appColor-text font-playfair">
+        <div className="text flex justify-center items-center text-center mt-[56px] md:mt-0 text-[24px] w-full md:text-[32px] xl:px-[42px] xl:text-[42px] text-appColor-text font-playfair">
           <p>
             A grateful heart is a happy heart, start logging your gratitude
             today.
@@ -121,7 +123,12 @@ export default function LoginPage() {
                 required
               />
               <div className="buttons flex flex-col items-center gap-[4px] mt-[24px]">
-                <Button label="Login" variant="primary" type="submit" />
+                <Button
+                  label="Login"
+                  variant="primary"
+                  type="submit"
+                  disabled={laoding}
+                />
               </div>
             </form>
             <div className="signUp flex w-full align-middle justify-center">
@@ -134,7 +141,9 @@ export default function LoginPage() {
         </div>
       </div>
       <div className="forgetPass absolute bottom-[32px] left-1/2 -translate-x-1/2 text-[14px] text-[#4e4e4e]">
-        <button>Forgot password?</button>
+        <Link href="/forgetPassword">
+          <Button label="Forgot password?" variant="secondary" />
+        </Link>
       </div>
     </>
   );

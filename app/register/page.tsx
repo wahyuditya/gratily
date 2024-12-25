@@ -12,6 +12,7 @@ export default function Register() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [laoding, setLoading] = useState(false);
 
   const router = useRouter();
 
@@ -145,6 +146,7 @@ export default function Register() {
 
   const handleSignUp = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true);
     setError(null);
     try {
       const credential = await createUserWithEmailAndPassword(
@@ -184,6 +186,7 @@ export default function Register() {
         setError("An error occurred. Please try again.");
       }
     }
+    setLoading(true);
   };
 
   return (
@@ -226,7 +229,12 @@ export default function Register() {
                 required
               />
               <div className=" flex flex-col items-center gap-[4px] mt-[24px]">
-                <Button label="Sign up" variant="primary" type="submit" />
+                <Button
+                  label="Sign up"
+                  variant="primary"
+                  type="submit"
+                  disabled={laoding}
+                />
               </div>
             </form>
           </div>
