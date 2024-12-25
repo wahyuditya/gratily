@@ -1,11 +1,21 @@
 "use client";
 import { useState } from "react";
+import { FaEllipsisH } from "react-icons/fa";
 
 function Entry() {
-  const [isExpand, setIsExpand] = useState(true);
+  const [isExpand, setIsExpand] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleExpand = () => {
     setIsExpand(!isExpand);
+  };
+
+  const handleMenuToggle = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleRemove = () => {
+    console.log("remove");
   };
 
   return (
@@ -30,10 +40,21 @@ function Entry() {
             01 . 24 AM
           </div>
         </div>
-        <div className="left w-[50%] flex justify-end items-center">
-          <button className="text-[14px] px-[18px] py-[4px] rounded-[4px] border border-appColor-950">
-            Remove
-          </button>
+        <div className="left w-[50%] flex justify-end items-center ">
+          <FaEllipsisH
+            onClick={handleMenuToggle}
+            className="cursor-pointer mr-[18px] "
+          />
+          {isMenuOpen && (
+            <div className="absolute right-[80px] bg-white border border-appColor-border rounded shadow-md px-[18px] py-[9px]">
+              <button
+                onClick={handleRemove}
+                className="text-appColor-text text-[14px]"
+              >
+                Remove
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </>

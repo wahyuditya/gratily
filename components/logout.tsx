@@ -22,7 +22,6 @@ function Logout() {
           label="Log out"
           variant="secondary"
           type="button"
-          bordered
         />
       </div>
     </>

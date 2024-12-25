@@ -5,15 +5,14 @@ import Entries from "./entries";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/lib/firebaseConfig";
 import { useRouter } from "next/navigation";
+import FetchEntry from "./fetchEntry";
 
 export default function Home() {
-  const [user] = useAuthState(auth);
   const router = useRouter();
-
-  console.log(user);
 
   return (
     <>
+      {/* <FetchEntry /> */}
       <Navbar />
       <AddEntry />
       <div className="entries relative h-screen">

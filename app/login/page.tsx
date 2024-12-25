@@ -87,7 +87,6 @@ export default function LoginPage() {
         setError("The email or password you entered is incorrect.");
       }
     }
-    setLoading(false);
   };
 
   return (
