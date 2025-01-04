@@ -1,13 +1,42 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
+import { db, auth } from "@/lib/firebaseConfig";
 import Entry from "./entry";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 function Entries() {
   const [isOpen, setIsOpen] = useState(false);
+  const [user] = useAuthState(auth);
+  const [entries, setEntries] = useState<
+    { id: string; text: string; timestamp: any }[]
+  >([]);
 
   const handleOpen = () => {
     setIsOpen(!isOpen);
   };
+
+  useEffect(() => {
+    if (user) {
+      const userId = user.uid;
+      const entriesCollection = collection(db, "users", userId, "entry");
+      const entriesQuery = query(
+        entriesCollection,
+        orderBy("timestamp", "desc")
+      );
+
+      const unsubscribe = onSnapshot(entriesQuery, (snapshot) => {
+        const entriesList = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          text: doc.data().text,
+          timestamp: doc.data().timestamp,
+        }));
+        setEntries(entriesList);
+      });
+
+      return () => unsubscribe();
+    }
+  }, [user]);
 
   return (
     <>
@@ -28,7 +57,9 @@ function Entries() {
               {isOpen ? `Close` : `Open`}
             </button>
           </div>
-          <Entry />
+          {entries.map((entry) => (
+            <Entry key={entry.id} entry={entry} />
+          ))}
         </div>
       </div>
     </>

@@ -85,6 +85,7 @@ export default function LoginPage() {
     } catch (e: any) {
       if (e.message === "Firebase: Error (auth/invalid-credential).") {
         setError("The email or password you entered is incorrect.");
+        setLoading(false);
       }
     }
   };
@@ -127,6 +128,7 @@ export default function LoginPage() {
                   variant="primary"
                   type="submit"
                   disabled={laoding}
+                  loading={laoding}
                 />
               </div>
             </form>
