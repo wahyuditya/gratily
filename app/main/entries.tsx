@@ -14,6 +14,8 @@ function Entries() {
     { id: string; text: string; timestamp: any }[]
   >([]);
 
+  const [openEntryId, setOpenEntryId] = useState<string | null>(null);
+
   const handleOpen = () => {
     setIsOpen(!isOpen);
   };
@@ -68,7 +70,16 @@ function Entries() {
           ) : (
             <div className=" overflow-auto h-[calc(100vh-0px)] custom-scrollbar">
               {entries.map((entry) => (
-                <Entry key={entry.id} entry={entry} />
+                <Entry
+                  key={entry.id}
+                  entryId={entry.id}
+                  entry={entry}
+                  isMenuIdOpen={openEntryId === entry.id}
+                  onMenuToggle={() =>
+                    setOpenEntryId(openEntryId === entry.id ? null : entry.id)
+                  }
+                  user={user}
+                />
               ))}
             </div>
           )}

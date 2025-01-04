@@ -22,35 +22,40 @@ const ThreeDots = (
 interface EntryProps {
   entry: {
     id: string;
-    entryId?: string;
     text?: string;
     timestamp?: any;
   };
+  isMenuIdOpen: boolean;
+  onMenuToggle: () => void;
+  user: any;
+  entryId: string;
 }
 
-function Entry({ entry }: EntryProps) {
+function Entry({
+  entry,
+  isMenuIdOpen,
+  onMenuToggle,
+  user,
+  entryId,
+}: EntryProps) {
   const [isExpand, setIsExpand] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleExpand = () => {
     setIsExpand(!isExpand);
   };
 
-  const handleMenuToggle = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-
   const handleRemove = async () => {
-    try {
-      if (!entry.entryId) {
-        throw new Error("entryId is undefined");
+    if (user) {
+      try {
+        const entryDocRef = doc(
+          collection(db, "users", user.uid, "entry"),
+          entryId
+        );
+        await deleteDoc(entryDocRef);
+        alert("Entry removed successfully");
+      } catch (error) {
+        alert("Error removing entry: ");
       }
-      const entriesCollection = collection(db, "users", entry.entryId, "entry");
-      const entryDocRef = doc(entriesCollection, entry.id);
-      await deleteDoc(entryDocRef);
-      console.log("Entry removed successfully");
-    } catch (error) {
-      console.error("Error removing entry: ", error);
     }
   };
 
@@ -89,11 +94,8 @@ function Entry({ entry }: EntryProps) {
           </div>
         </div>
         <div className="left w-[50%] flex justify-end items-center ">
-          <div onClick={handleMenuToggle} className="cursor-pointer mr-[18px]">
-            {ThreeDots}
-          </div>
-          {isMenuOpen && (
-            <div className="absolute right-[80px] bg-white border border-appColor-border rounded shadow-md px-[18px] py-[9px]">
+          {isMenuIdOpen && (
+            <div className="mr-[24px] right-[80px] bg-white border border-appColor-border rounded shadow-md px-[18px] py-[9px]">
               <button
                 onClick={handleRemove}
                 className="text-appColor-text text-[14px]"
@@ -102,6 +104,12 @@ function Entry({ entry }: EntryProps) {
               </button>
             </div>
           )}
+          <div
+            onClick={onMenuToggle}
+            className="cursor-pointer mr-[18px] p-[4px]"
+          >
+            {ThreeDots}
+          </div>
         </div>
       </div>
     </>
