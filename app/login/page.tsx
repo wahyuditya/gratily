@@ -82,10 +82,14 @@ export default function LoginPage() {
       setPassword("");
 
       router.push("/");
-    } catch (e: any) {
-      if (e.message === "Firebase: Error (auth/invalid-credential).") {
-        setError("The email or password you entered is incorrect.");
-        setLoading(false);
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        if (e.message === "Firebase: Error (auth/invalid-credential).") {
+          setError("The email or password you entered is incorrect.");
+          setLoading(false);
+        }
+      } else {
+        console.error("An unknown error occurred:", e);
       }
     }
   };

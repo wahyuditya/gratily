@@ -48,7 +48,7 @@ export default function ForgetPassword() {
     try {
       await sendPasswordResetEmail(auth, email);
       setSuccess("Password reset email sent. Check your inbox!");
-    } catch (error: any) {
+    } catch {
       setError("An error occurred. Please try again.");
     }
     setLoading(false);
@@ -63,8 +63,8 @@ export default function ForgetPassword() {
       <div className="warper md:flex md:gap-[42px] md:mt-[100px] mt-[58px]">
         <div className="text flex justify-center items-center text-center mt-[56px] md:mt-0 text-[24px] w-full md:text-[32px] xl:px-[42px] xl:text-[42px] text-appColor-text font-playfair">
           <p>
-            Enter the email address associated with your account, and we'll send
-            you instructions to reset your password.
+            Enter the email address associated with your account, and we&apos;ll
+            send you instructions to reset your password.
           </p>
         </div>
 

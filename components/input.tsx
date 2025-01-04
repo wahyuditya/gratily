@@ -1,10 +1,10 @@
 interface InputProps {
   label: string;
-  icon: any;
+  icon: React.ReactNode;
   required?: boolean;
   type?: "email" | "password" | "text";
-  onChange?: (e: any) => void;
-  value?: any;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  value?: string | number;
 }
 
 const Input: React.FC<InputProps> = ({

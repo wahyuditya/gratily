@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { doc, deleteDoc } from "firebase/firestore";
 import { db } from "@/lib/firebaseConfig";
-import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
+import { collection, Timestamp } from "firebase/firestore";
 
 const ThreeDots = (
   <svg
@@ -23,12 +23,16 @@ interface EntryProps {
   entry: {
     id: string;
     text?: string;
-    timestamp?: any;
+    timestamp?: Timestamp;
   };
   isMenuIdOpen: boolean;
   onMenuToggle: () => void;
-  user: any;
+  user: User;
   entryId: string;
+}
+
+interface User {
+  uid: string;
 }
 
 function Entry({
@@ -53,7 +57,7 @@ function Entry({
         );
         await deleteDoc(entryDocRef);
         alert("Entry removed successfully");
-      } catch (error) {
+      } catch {
         alert("Error removing entry: ");
       }
     }

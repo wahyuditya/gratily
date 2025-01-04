@@ -1,6 +1,12 @@
 "use client";
 import { useEffect, useState } from "react";
-import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
+import {
+  collection,
+  onSnapshot,
+  orderBy,
+  query,
+  Timestamp,
+} from "firebase/firestore";
 import { db, auth } from "@/lib/firebaseConfig";
 import Entry from "./entry";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -11,10 +17,13 @@ function Entries() {
   const [user] = useAuthState(auth);
   const [loading, setLoading] = useState(true);
   const [entries, setEntries] = useState<
-    { id: string; text: string; timestamp: any }[]
+    { id: string; text: string; timestamp: Timestamp }[]
   >([]);
-
   const [openEntryId, setOpenEntryId] = useState<string | null>(null);
+
+  interface User {
+    uid: string;
+  }
 
   const handleOpen = () => {
     setIsOpen(!isOpen);
@@ -78,7 +87,7 @@ function Entries() {
                   onMenuToggle={() =>
                     setOpenEntryId(openEntryId === entry.id ? null : entry.id)
                   }
-                  user={user}
+                  user={user as User}
                 />
               ))}
             </div>

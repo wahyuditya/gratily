@@ -1,5 +1,3 @@
-import { FC } from "react";
-
 interface successMessageProps {
   message: string;
 }

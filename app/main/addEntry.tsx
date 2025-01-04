@@ -38,8 +38,10 @@ function AddEntry() {
       setTimeout(() => {
         setFade(false);
       }, 3000);
-    } catch (e: any) {
-      console.log("Error adding entry " + e.message);
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        console.log("Error adding entry " + e.message);
+      }
     }
     setEntry("");
     setLoading(false);
@@ -50,14 +52,14 @@ function AddEntry() {
       <div className="warper grid place-content-center gap-[59px] mt-[30px] w-full">
         <div className="text max-w-[780px] font-playfair">
           <span className="text-[38px] font-light text-[rgba(78,78,78,0.8)]">
-            "I know your day might be a bit{" "}
+            &quot;I know your day might be a bit{" "}
             <span className="font-bold text-appColor-950">heavy,</span>
           </span>{" "}
           <br />{" "}
           <span className="text-[28px] text-[rgba(78,78,78,0.8)]">
             but take a moment to reflect, what are you{" "}
             <span className="italic text-appColor-950">grateful</span> for
-            today?"
+            today?&quot;
           </span>
         </div>
 
