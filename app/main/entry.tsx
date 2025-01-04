@@ -1,6 +1,8 @@
 "use client";
 import { useState } from "react";
-import { FaEllipsisH } from "react-icons/fa";
+import { doc, deleteDoc } from "firebase/firestore";
+import { db } from "@/lib/firebaseConfig";
+import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 
 const ThreeDots = (
   <svg
@@ -38,29 +40,52 @@ function Entry({ entry }: EntryProps) {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const handleRemove = () => {
-    console.log("remove");
+  const handleRemove = async () => {
+    try {
+      if (!entry.entryId) {
+        throw new Error("entryId is undefined");
+      }
+      const entriesCollection = collection(db, "users", entry.entryId, "entry");
+      const entryDocRef = doc(entriesCollection, entry.id);
+      await deleteDoc(entryDocRef);
+      console.log("Entry removed successfully");
+    } catch (error) {
+      console.error("Error removing entry: ", error);
+    }
   };
+
+  const formattedDate = entry.timestamp?.toDate().toLocaleDateString("en-US", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+
+  const formattedTime = entry.timestamp?.toDate().toLocaleTimeString("en-US", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true,
+  });
 
   return (
     <>
-      <div className="entry flex w-full text-appColor-950">
+      <div className="entry flex w-full text-appColor-950 py-[8px] ">
         <div className="right flex w-[50%] flex-col">
           <div
             onClick={handleExpand}
             className={`text font-playfair font-medium text-[16px] transition-all duration-300 ease-in-out ${
               isExpand
-                ? "h-[24px] overflow-hidden text-ellipsis whitespace-nowrap"
-                : "h-fit"
+                ? "h-fit"
+                : "h-[24px] overflow-hidden text-ellipsis whitespace-nowrap"
             } `}
           >
             {entry.text}
           </div>
 
           <div className="time text-[10px]">
-            {entry.timestamp?.toDate().toLocaleString()}
+            {formattedDate}
             <br />
-            01 . 24 AM
+            {formattedTime}
           </div>
         </div>
         <div className="left w-[50%] flex justify-end items-center ">

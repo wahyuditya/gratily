@@ -23,3 +23,38 @@ body {
   height: 100vh;
   overflow-y: hidden;
 }
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  /* background: #f1f1f1; */
+  background: #f5f5f590;
+
+  border-radius: 100px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #686767;
+  border-radius: 100px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #4e4e4e;
+}
+
+/* "50": "#ffffea",
+"100": "#fffbc5",
+"200": "#fff885",
+"300": "#ffee46",
+"400": "#ffdf1b",
+"500": "#ffc107",
+"600": "#e29400",
+"700": "#bb6902",
+"800": "#985108",
+"900": "#7c420b",
+"950": "#482200",
+text: "#4E4E4E",
+bg: "#F5F5F5",
+border: "#C1C1C1", */

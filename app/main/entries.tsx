@@ -4,10 +4,12 @@ import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { db, auth } from "@/lib/firebaseConfig";
 import Entry from "./entry";
 import { useAuthState } from "react-firebase-hooks/auth";
+import Loader from "@/components/Loader";
 
 function Entries() {
   const [isOpen, setIsOpen] = useState(false);
   const [user] = useAuthState(auth);
+  const [loading, setLoading] = useState(true);
   const [entries, setEntries] = useState<
     { id: string; text: string; timestamp: any }[]
   >([]);
@@ -32,6 +34,7 @@ function Entries() {
           timestamp: doc.data().timestamp,
         }));
         setEntries(entriesList);
+        setLoading(false);
       });
 
       return () => unsubscribe();
@@ -57,9 +60,18 @@ function Entries() {
               {isOpen ? `Close` : `Open`}
             </button>
           </div>
-          {entries.map((entry) => (
-            <Entry key={entry.id} entry={entry} />
-          ))}
+
+          {loading ? (
+            <div className="flex justify-center">
+              <Loader />
+            </div>
+          ) : (
+            <div className=" overflow-auto h-[calc(100vh-0px)] custom-scrollbar">
+              {entries.map((entry) => (
+                <Entry key={entry.id} entry={entry} />
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </>

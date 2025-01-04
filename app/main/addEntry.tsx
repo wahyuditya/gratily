@@ -75,6 +75,7 @@ function AddEntry() {
             label="Save"
             variant="primary"
             type="submit"
+            loading={loading}
             disabled={!entry || loading}
           />
         </form>
