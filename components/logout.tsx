@@ -20,7 +20,7 @@ function Logout() {
 
   return (
     <>
-      <div className="mr-[20px]">
+      <div>
         <Button
           onClick={handleLogout}
           label="Log out"
