@@ -200,6 +200,7 @@ export default function Register() {
                   variant="primary"
                   type="submit"
                   disabled={laoding}
+                  loading={laoding}
                 />
               </div>
             </form>
@@ -207,7 +208,7 @@ export default function Register() {
         </div>
       </div>
 
-      <div className=" w-full left-1/2 -translate-x-1/2 absolute bottom-[32px] text-center text-[14px] text-[#4e4e4e]">
+      <div className=" absolute bottom-[32px] left-1/2 -translate-x-1/2 text-[14px] text-[#4e4e4e]">
         <Link href="/login">
           <Button label="Already have an account? Log in" variant="secondary" />
         </Link>
