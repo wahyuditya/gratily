@@ -56,7 +56,7 @@ function Entries() {
     <>
       <div
         className={`background ${
-          isOpen ? "h-screen" : "h-[214px] rounded-t-[18px]"
+          isOpen ? "h-screen" : "md:h-[214px] h-[82px] rounded-t-[18px]"
         }  fixed bottom-0 left-0 right-0 bg-[linear-gradient(to_right_top,#fffbc5,#fffcce,#fffdd8,#fffee1,#ffffea)] border border-appColor-border transition-all duration-300 ease-in-out`}
       >
         <div className="logs px-[18px]">

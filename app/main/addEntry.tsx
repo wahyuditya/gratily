@@ -49,7 +49,7 @@ function AddEntry() {
 
   return (
     <>
-      <div className="warper grid place-content-center gap-[59px] mt-[30px] w-full">
+      <div className="warper grid place-content-center gap-[24px] md:gap-[59px] mt-[30px] w-full">
         <div className="text max-w-[780px] font-playfair">
           <span className="text-[38px] font-light text-[rgba(78,78,78,0.8)]">
             &quot;I know your day might be a bit{" "}
