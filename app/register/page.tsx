@@ -183,10 +183,7 @@ export default function Register() {
 
       const token = await credential.user.getIdToken();
       document.cookie = `authToken=${token}; path=/`;
-
-      setTimeout(() => {
-        router.push("/");
-      }, 3000);
+      router.push("/");
     } catch (err: unknown) {
       if (err instanceof Error) {
         if (!name) {
@@ -207,7 +204,7 @@ export default function Register() {
         }
       }
     }
-    setLoading(true);
+    setLoading(false);
   };
 
   return (

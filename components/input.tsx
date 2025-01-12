@@ -28,7 +28,7 @@ const Input: React.FC<InputProps> = ({
         </div>
 
         <input
-          className="w-full h-[42px] px-[46px] rounded-[4px] border border-[#C1C1C1] bg-[#fafafa]"
+          className="w-full h-[48px] px-[46px] rounded-[4px] border border-[#C1C1C1] bg-[#fafafa]"
           type={type}
           required={required}
           placeholder={label}
