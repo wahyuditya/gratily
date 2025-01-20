@@ -1,6 +1,7 @@
 interface InputProps {
   label: string;
-  icon: React.ReactNode;
+  placeholder?: string;
+  icon?: React.ReactNode;
   required?: boolean;
   type?: "email" | "password" | "text";
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -13,6 +14,7 @@ interface InputProps {
 
 const Input: React.FC<InputProps> = ({
   label,
+  placeholder,
   icon,
   trailingIcon,
   required = true,
@@ -23,21 +25,21 @@ const Input: React.FC<InputProps> = ({
   return (
     <>
       <div className="email relative mb-[18px]">
-        <div className="absolute left-[12px] top-1/2 -translate-y-1/2">
-          {icon}
-        </div>
-
-        <input
-          className="w-full h-[48px] px-[46px] rounded-[4px] border border-[#C1C1C1] bg-[#fafafa]"
-          type={type}
-          required={required}
-          placeholder={label}
-          onChange={onChange}
-          value={value}
-        />
-        <div className="absolute right-[12px] top-1/2 -translate-y-1/2">
+        <p className="mb-[8px]">{label}</p>
+        <div className="flex items-center relative w-full h-[54px] px-[12px] rounded-[12px] border border-[#C1C1C1] bg-[#fafafa] focus-within:border-appColor-400 focus-within:shadow-lg focus-within:shadow-appColor-500/20 transition-shadow">
+          <div className="mr-[12px]">{icon}</div>
+          <input
+            className="flex-1 h-full bg-transparent outline-none"
+            type={type}
+            required={required}
+            placeholder={placeholder}
+            onChange={onChange}
+            value={value}
+          />
           {trailingIcon && (
-            <div onClick={trailingIcon.onClick}>{trailingIcon.icon}</div>
+            <div className="ml-[12px]" onClick={trailingIcon.onClick}>
+              {trailingIcon.icon}
+            </div>
           )}
         </div>
       </div>

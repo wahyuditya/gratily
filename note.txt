@@ -1,4 +1,3 @@
 Priority to update
-- Form fix to has a label even user clik to type (material design ui?) // already have an icon, not sure to change to be still have a lable
 - Password strong needed.
 - logo creation
