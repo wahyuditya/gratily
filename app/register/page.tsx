@@ -7,7 +7,6 @@ import { ChangeEvent, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import ErrorMessage from "@/components/errorMessage";
-import axios from "axios";
 
 export default function Register() {
   const [name, setName] = useState("");

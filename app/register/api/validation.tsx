@@ -7,7 +7,7 @@ interface RegisterRequestBody {
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "POST") {
-    const { email, password }: RegisterRequestBody = req.body;
+    const { password }: RegisterRequestBody = req.body;
 
     // Password validation regex
     const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
