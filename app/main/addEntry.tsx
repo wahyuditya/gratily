@@ -11,6 +11,10 @@ function AddEntry() {
   const [success, setSuccess] = useState(false);
   const [fade, setFade] = useState(false);
 
+  const handleFocus = () => {
+    setEntry("I'm grateful for ");
+  };
+
   const handleAddEntry = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -68,13 +72,14 @@ function AddEntry() {
           className="flex max-w-[780px] flex-col items-center w-full gap-[21px] rounded-[4px]"
         >
           <textarea
+            onFocus={handleFocus}
             onChange={(e) => setEntry(e.target.value)}
             value={entry}
             placeholder="I'm grateful for..."
-            className="w-full h-[128px] px-[18px] py-[12px] bg-[#fafafa] text-appColor-text font-playfair text-[18px] border border-appColor-border rounded-[4px]"
+            className="w-full h-[128px] px-[18px] py-[12px] text-appColor-text font-playfair text-[18px] rounded-[12px] border border-[#C1C1C1] bg-[#fafafa] focus:border-appColor-400 focus:shadow-lg focus:shadow-appColor-400/20 transition-shadow outline-none"
           ></textarea>
           <Button
-            label="Save"
+            label="Log My Gratitude"
             variant="primary"
             type="submit"
             loading={loading}

@@ -1,3 +1,6 @@
 Priority to update
 - Password strong needed.
-- logo creation
+- Auth using google and social media
+- Popup confirmation remove action
+- bg animaation in my gratitude board.
+- logo creation.

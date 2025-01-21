@@ -37,7 +37,10 @@ const Input: React.FC<InputProps> = ({
             value={value}
           />
           {trailingIcon && (
-            <div className="ml-[12px]" onClick={trailingIcon.onClick}>
+            <div
+              className="absolute right-[12px]"
+              onClick={trailingIcon.onClick}
+            >
               {trailingIcon.icon}
             </div>
           )}

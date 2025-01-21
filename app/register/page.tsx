@@ -7,6 +7,7 @@ import { ChangeEvent, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import ErrorMessage from "@/components/errorMessage";
+import axios from "axios";
 
 export default function Register() {
   const [name, setName] = useState("");
@@ -90,6 +91,26 @@ export default function Register() {
     e.preventDefault();
     setLoading(true);
     setError(null);
+
+    const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
+    if (!passwordRegex.test(password)) {
+      setError(
+        "Password must be at least 8 characters long, contain at least one uppercase letter and one number."
+      );
+      setLoading(false);
+      return;
+    }
+
+    // try {
+    //   const response = await axios.post("/api/register", { email, password });
+    //   console.log(response.data.message);
+    //   // Handle successful registration (e.g., redirect to login page)
+    // } catch (error: any) {
+    //   setError(error.response?.data?.error || "An unknown error occurred.");
+    // } finally {
+    //   setLoading(false);
+    // }
+
     try {
       const credential = await createUserWithEmailAndPassword(
         auth,
@@ -118,14 +139,19 @@ export default function Register() {
           const firebaseError = err as { code?: string };
           if (firebaseError.code === "auth/email-already-in-use") {
             setError("The email address is already use.");
+            setLoading(false);
           } else if (firebaseError.code === "auth/invalid-email") {
             setError("Email invalid.");
+            setLoading(false);
           } else if (firebaseError.code === "auth/missing-password") {
             setError("Please fill the password.");
+            setLoading(false);
           } else if (firebaseError.code == "auth/weak-password") {
             setError("Password must be at least 8 characters long.");
+            setLoading(false);
           } else {
             setError("An error occurred. Please try again.");
+            setLoading(false);
           }
         }
       }
@@ -136,19 +162,19 @@ export default function Register() {
   return (
     <>
       <div className="logo flex justify-center">
-        <img className="mt-[64px]" src="/logo.svg" alt="Logo" />
+        <img className="md:mt-[62px] mt-[34px]" src="/logo.svg" alt="Logo" />
       </div>
 
-      <div className="warper md:flex md:gap-[42px]">
-        <div className="text  flex justify-center items-center text-center mt-[56px] md:mt-0 text-[24px] w-full md:text-[32px] xl:px-[42px] xl:text-[42px] text-appColor-text font-playfair">
+      <div className="warper  md:flex md:gap-[42px] mt-[28px] justify-center items-center">
+        <div className="text flex justify-center items-center text-center mt-[28px] md:mt-0 text-[24px] w-full md:text-[32px] xl:px-[42px] xl:text-[42px] text-appColor-text font-playfair">
           <p>
             Gratitude journaling helps reduce stress, boost happiness, and
             improve your well-being.
           </p>
         </div>
 
-        <div className="flex  justify-center align-middle items-center w-full">
-          <div className="max-w-lg w-full mt-[56px]">
+        <div className="flex flex-col justify-center align-middle items-center w-full mt-[28px] ">
+          <div className="max-w-lg w-full">
             {error && <ErrorMessage message={error}></ErrorMessage>}
             <form onSubmit={handleSignUp}>
               <Input onChange={handleName} label="Name" type="text" required />
@@ -182,7 +208,7 @@ export default function Register() {
         </div>
       </div>
 
-      <div className="absolute bottom-[32px] left-1/2 -translate-x-1/2 text-[14px] text-[#4e4e4e]">
+      <div className=" w-full flex justify-center content-center mt-[56px] text-[#4e4e4e]">
         <Link href="/login">
           <Button label="Already have an account? Log in" variant="secondary" />
         </Link>

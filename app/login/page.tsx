@@ -102,18 +102,18 @@ export default function LoginPage() {
   return (
     <>
       <div className="logo flex justify-center">
-        <img className="mt-[64px]" src="/logo.svg" alt="Logo" />
+        <img className="md:mt-[62px] mt-[34px]" src="/logo.svg" alt="Logo" />
       </div>
 
-      <div className="warper md:flex md:gap-[42px]">
-        <div className="text flex justify-center items-center text-center mt-[56px] md:mt-0 text-[24px] w-full md:text-[32px] xl:px-[42px] xl:text-[42px] text-appColor-text font-playfair">
+      <div className="warper md:flex md:gap-[42px] mt-[28px] justify-center items-center">
+        <div className="text flex justify-center items-center text-center mt-[28px] md:mt-0 text-[24px] w-full md:text-[32px] xl:px-[42px] xl:text-[42px] text-appColor-text font-playfair">
           <p>
             A grateful heart is a happy heart, start logging your gratitude
             today.
           </p>
         </div>
 
-        <div className="flex flex-col justify-center align-middle items-center w-full mt-[56px]">
+        <div className="flex flex-col justify-center align-middle items-center w-full mt-[28px]">
           {error && <ErrorMessage message={error}></ErrorMessage>}
           <div className="login max-w-lg w-full">
             <form onSubmit={handleLogin}>
@@ -153,7 +153,7 @@ export default function LoginPage() {
         </div>
       </div>
 
-      <div className="forgetPass absolute bottom-[32px] left-1/2 -translate-x-1/2 text-[14px] text-[#4e4e4e]">
+      <div className="w-full flex justify-center content-center mt-[56px] text-[#4e4e4e]">
         <Link href="/forgetPassword">
           <Button label="Forgot password?" variant="secondary" />
         </Link>
