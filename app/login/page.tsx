@@ -143,7 +143,7 @@ export default function LoginPage() {
                 />
               </div>
             </form>
-            <div className="signUp flex w-full align-middle justify-center">
+            <div className="signUp md:absolute md:bottom-[42px] flex w-full align-middle justify-center">
               <Link href="/register">
                 {" "}
                 <Button label="Sign up" variant="secondary" />
