@@ -143,7 +143,7 @@ export default function LoginPage() {
                 />
               </div>
             </form>
-            <div className="signUp md:absolute md:bottom-[42px] flex w-full align-middle justify-center">
+            <div className="signUp flex w-full align-middle justify-center">
               <Link href="/register">
                 {" "}
                 <Button label="Sign up" variant="secondary" />
@@ -154,7 +154,7 @@ export default function LoginPage() {
       </div>
 
       <div className="w-full flex justify-center content-center mt-[56px] text-[#4e4e4e]">
-        <Link href="/forgetPassword">
+        <Link href="/forgetPassword" className="md:absolute md:bottom-[42px]">
           <Button label="Forgot password?" variant="secondary" />
         </Link>
       </div>
